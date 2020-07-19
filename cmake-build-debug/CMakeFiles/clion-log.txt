@@ -1,0 +1,18 @@
+/lustre/home/acct-umjplw/umjplw/gcl/karfs_folder/Remote/local/cmake_3.15/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV
+-- The C compiler identification is GNU 8.3.0
+-- The CXX compiler identification is GNU 8.3.0
+-- Check for working C compiler: /lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/bin/gcc
+-- Check for working C compiler: /lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/bin/gcc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/bin/g++
+-- Check for working CXX compiler: /lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/bin/g++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug

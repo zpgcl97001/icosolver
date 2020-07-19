@@ -1,0 +1,1 @@
+/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/bin/g++  -g   CMakeFiles/icosolver.dir/icoSolver.cpp.o  -o icosolver 

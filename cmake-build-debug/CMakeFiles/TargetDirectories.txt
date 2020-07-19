@@ -1,0 +1,3 @@
+/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/CMakeFiles/icosolver.dir
+/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/CMakeFiles/edit_cache.dir

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="ICOSOLVER"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="icosolver">
+				<Option output="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/icosolver" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/boost-1.65.1-zmfewtzxajidxapt44cntbikhva2enep/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/openblas-0.3.7-paog42mpv4e5re4aypej77asddpq2ra7/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/sundials-4.1.0-3csmzwmppfpua4qurwgqgtxina4rbgkj/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/openmpi-3.1.5-mtdcmsa7pgj25pm5hdkzri4bdldcde4r/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/hdf5-1.10.6-sqxgmiyubg6xqo3sb2llsikcilfk2r5n/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/backward"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 icosolver"/>
+					<CompileFile command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="icosolver/fast">
+				<Option output="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/icosolver" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/boost-1.65.1-zmfewtzxajidxapt44cntbikhva2enep/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/openblas-0.3.7-paog42mpv4e5re4aypej77asddpq2ra7/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/sundials-4.1.0-3csmzwmppfpua4qurwgqgtxina4rbgkj/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/openmpi-3.1.5-mtdcmsa7pgj25pm5hdkzri4bdldcde4r/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-skylake_avx512/gcc-8.3.0/hdf5-1.10.6-sqxgmiyubg6xqo3sb2llsikcilfk2r5n/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/backward"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/include"/>
+					<Add directory="/lustre/opt/cascadelake/linux-centos7-x86_64/gcc-4.8.5/gcc-8.3.0-aoqn7jsisvrj2u5puapmiufudxmm6wt4/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 icosolver/fast"/>
+					<CompileFile command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j6 -f &quot;/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/icoSolver.cpp">
+			<Option target="icosolver"/>
+		</Unit>
+		<Unit filename="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/icoSolver.h">
+			<Option target="icosolver"/>
+		</Unit>
+		<Unit filename="/lustre/home/acct-umjplw/umjplw/gcl/CFD/ProjectIV/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

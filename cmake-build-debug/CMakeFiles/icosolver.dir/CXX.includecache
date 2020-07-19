@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/f/CFD/ProjectIV/Deriv.h
+
+/cygdrive/f/CFD/ProjectIV/icoSolver.cpp
+iostream
+-
+math.h
+/cygdrive/f/CFD/ProjectIV/math.h
+vector
+-
+stdio.h
+-
+Deriv.h
+/cygdrive/f/CFD/ProjectIV/Deriv.h
+icoSolver.h
+/cygdrive/f/CFD/ProjectIV/icoSolver.h
+
+/cygdrive/f/CFD/ProjectIV/icoSolver.h
+iostream
+-
+math.h
+/cygdrive/f/CFD/ProjectIV/math.h
+vector
+-
+stdio.h
+-
+Deriv.h
+/cygdrive/f/CFD/ProjectIV/Deriv.h
+
