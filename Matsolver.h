@@ -37,41 +37,32 @@ void MatMul(double**A,int A_row,int A_col,double**B,int B_row,int B_col){
 
 void Gaussian_Elimination(double **PMat,double **AMat,double *bMat,double *SolMat,int size,int iter){
 
+    //Mat initialize
+    double **LMat = new double *[size];
     double **NewPMat = new double *[size];
-    for(int i = 0;i<size;++i){
-        PMat[i] = new double[size];
-    }
+    double **NewAMat = new double *[size];
     for(int i = 0;i<size;++i){
         NewPMat[i] = new double[size];
+        NewPMat[i] = new double[size];
+        LMat[i]    = new double[size];
     }
 
+    //End initialize
+    for (int i=0;i<size; ++i) {
+        aii = AMat[i][i];
 
-
-    double **NewAMat = new double *[size];
-    for(int i =0;i<size;++i) {
-        NewAMat[i] = new double[size];
-    }
-    for (;iter <size -1; ++iter) {
-        aii = AMat[iter][iter];
-        if(abs(aii-0)>1e-10){
-            for(int j =iter+1;j<size;++j) {
-                bMat[j] -= AMat[j][iter]/AMat[iter][iter]*bMat[iter];
-                for(k = iter+1;k<size;++k) {
-                    AMat[j][k] -= AMat[j][iter] / AMat[iter][iter] * AMat[iter][k];
-                }
-            }
-        }else{
+        if(abs(aii - 0)<1e-5){
             for (int j = 0; j <size ; ++k) {
                 for (int k = 0; k <size ; ++k) {
-                if(j<iter){
-                    NewAMat[j][k] = AMat[j][k];
-                    NewPMat[j][k] = PMat[j][k];
-                }else{
-                    int I = iter+ (j-iter+1)%(size-iter);
-                    NewAMat[j][k] = Amat[I][k];
-                }
-                NewAMat[I][j] = AMat[i][j];
-                NewPMat[I][j] = PMat[i][j];
+                    if(j<i){
+                        NewAMat[j][k] = AMat[j][k];
+                        NewPMat[j][k] = PMat[j][k];
+                    }else{
+                        int I = i+ (j-i+1)%(size-i);
+                        NewAMat[j][k] = Amat[I][k];
+                    }
+                    NewAMat[I][j] = AMat[i][j];
+                    NewPMat[I][j] = PMat[i][j];
                 }
             }
             for (int i = 0; i <size ; ++i) {
@@ -80,14 +71,25 @@ void Gaussian_Elimination(double **PMat,double **AMat,double *bMat,double *SolMa
                     PMat[i][j] = NewPMat[i][j];
                 }
             }
-            MatSol::Gaussian_Elimination(PMat,AMat,bMat,SolMat,size,iter);
+
         }
+
+            for(int j =iter+1;j<size;++j) {
+                bMat[j] -= AMat[j][iter]/AMat[iter][iter]*bMat[iter];
+                for(k = iter+1;k<size;++k) {
+                    AMat[j][k] -= AMat[j][iter] / AMat[iter][iter] * AMat[iter][k];
+                }
+            }
+        }
+    //Calculate P L U
 
     }
 
 
 
 }
+
+void Matlinechange
 
 
 
