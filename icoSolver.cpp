@@ -5,6 +5,9 @@
 #include "Deriv.h"
 #include "icoSolver.h"
 #include<algorithm>
+#include <fstream>
+#include "Matsolver.h"
+
 
 int main(int argc, char *argv[]){
 
@@ -93,11 +96,9 @@ std::cout<<"Collect boundary points"<<std::endl;
 for(int i=0; i < Totalpoints; ++i){
     if((PointDomain[i].x - 3 * Ng * delx) >= 0 && (PointDomain[i].x - 4 * Ng * delx-1e-10) <= 0 && abs(PointDomain[i].y - Ng * dely)<1e-10){
         Square.Sid.push_back(i);
-        std::cout<<"Sid"<<i<<std::endl;
     }
     if((PointDomain[i].x - 3 * Ng * delx) >= 0 && (PointDomain[i].x - 4 * Ng * delx-1e-10) <= 0 && abs(PointDomain[i].y - 2* Ng * dely)<1e-10){
         Square.Nid.push_back(i);
-        std::cout<<"Sid"<<i<<std::endl;
     }
     if(abs(PointDomain[i].x - 3 * Ng * delx) < 1e-10 && (PointDomain[i].y -  Ng * dely+1e-10) >= 0 && PointDomain[i].y - 2* Ng * dely -1e-10 <= 0){
         Square.Wid.push_back(i);
@@ -108,7 +109,7 @@ for(int i=0; i < Totalpoints; ++i){
     if(abs(PointDomain[i].x - 0)<1e-10){
         Domain.Wid.push_back(i);
     }
-    if((abs(PointDomain[i].x)-XL*Ng*delx)<1e-10){
+    if(abs(PointDomain[i].x-XL*Ng*delx)<1e-10){
         Domain.Eid.push_back(i);
     }
     if(abs(PointDomain[i].y-0)<1e-10){
@@ -160,32 +161,54 @@ for (auto point:Square.Nid){
 //Pressure condition
 //testzone
 double **PMat = new double *[Totalpoints];
-double **PPMat = new double *[size];
 double *BMat = new double[Totalpoints];
+
 for (int i = 0; i < Totalpoints; ++i) {
     PMat[i] = new double[Totalpoints];
-    PPMat[i] = new double[Totalpoints];
+
 };
-
-for(int i = 0;i<size;++i){
-     PMat[i][i] = 1;
-}
-
 
 std::cout<<"Building Mat"<<std::endl;
 BuildLaplacePMat(PMat,BMat,PointDomain,Totalpoints,Square,Domain,delx,dely, rho, mu);
 std::cout<<"Output PMat"<<std::endl;
-std::cout<<PMat<<std::endl;
+//    for (int l = 0; l < Totalpoints; ++l) {
+////        std::cout<<"------------------row"<<l<<"-----------"<<std::endl;
+////        for (int m = 0; m <Totalpoints ; ++m) {
+////            std::cout<<l<<"-----"<<PMat[0][l]<<std::endl;
+////        }
+//    }
+
+MatSol matsol;
+
+double **LMat = new double*[Totalpoints];
+double **UMat = new double*[Totalpoints];
+double *xMat = new double[Totalpoints];
+for (int i = 0; i < Totalpoints; ++i) {
+    LMat[i] = new double[Totalpoints];
+    UMat[i] = new double[Totalpoints];
+}
+    for (int i = 0; i <Totalpoints ; ++i) {
+        xMat[i] = 0;
+        for (int j = 0; j <Totalpoints ; ++j) {
+            LMat[i][j] =0;
+            UMat[i][j] =0;
+        }
+
+    }
 
 
+matsol.LUdecomp(PMat,Totalpoints,LMat,UMat);
+matsol.SolveLU(LMat,UMat,BMat,xMat,Totalpoints);
 
-//Inital time loop
-for(double step = 0 ;step<Totalsteps;++step){
+std::cout<<"Write result to file "<<std::endl;
 
-    
+std::ofstream outfile;
+outfile.open("result.txt");
+    for (int k = 0; k < Totalpoints; ++k) {
+        outfile<<xMat[k]<<"\n";
 
-
-
+    }
+    outfile.close();
 
 
 
@@ -194,10 +217,6 @@ for(double step = 0 ;step<Totalsteps;++step){
 
 
 
-
-
-
-}
 
 int Coor2pid(double x,double y,std::vector<Points> PointDomain){//from Point coor to id ,
     int iter_ = 0;
@@ -324,45 +343,39 @@ double* gradP(std::vector<Points> PointDomain,int pid,double delx,double dely){
 //    U[1] = U_star[0] - delt/rho * gradP();
 //}
 
-void BuildLaplacePMat(double **PMat,double *BMat,std::vector<Points> PointDomain,int TotalPoints,Bluffbody Square,Bluffbody Domain,double delx,double dely,double rho,double mu) {
+void BuildLaplacePMat(double ** PMat,double *BMat,std::vector<Points> PointDomain,int TotalPoints,Bluffbody Square,Bluffbody Domain,double delx,double dely,double rho,double mu) {
 
     double x, y, dpdx, dpdy;
     int Eid, Wid, Sid, Nid, SSid, NNid;
     //Create Mat
     for (int i = 0; i < TotalPoints; ++i) {
-        for (int j = 0; j < TotalPoints; ++j) {
-
             if (InVector(i, Square.Wid)) {//Blunt West
-                x = PointDomain[i].x;
-                y = PointDomain[i].y;
-                Nid = Coor2pid(x, y + dely, PointDomain);
-                Sid = Coor2pid(x, y - dely, PointDomain);
+
                 dpdx = mu * (PointDomain[i].U[0] - 2 * PointDomain[i - 1].U[0] + PointDomain[i - 2].U[0]) /
                        pow(delx, 2) / delx;
                 x = PointDomain[i].x;
                 y = PointDomain[i].y;
-                Wid = i - 1;
-                Eid = i + 1;
-                Nid = Coor2pid(x, y + dely, PointDomain);
-                Sid = Coor2pid(x, y - dely, PointDomain);
-                PMat[i][i - 2] += -1 / 2 * pow(delx, 2);
-                PMat[i][i] += 1 / 2 * pow(delx, 2);
+
+                PMat[i][i - 2] += -1 / (2 * pow(delx, 2));
+                PMat[i][i] += 1 / (2 * pow(delx, 2));
                 BMat[i] = rho * (-(pow(PointDomain[i].U[0], 2) - pow(PointDomain[i - 2].U[0], 2)) / (2 * delx) +
                                  mu * (PointDomain[i].U[0] - 2 * PointDomain[i - 1].U[0] + PointDomain[i - 2].U[0]) /
                                  pow(delx, 2)) - dpdx;
             } else if (InVector(i, Square.Eid)) {//Blunt East
+
                 x = PointDomain[i].x;
                 y = PointDomain[i].y;
-                Nid = Coor2pid(x, y + dely, PointDomain);
-                Sid = Coor2pid(x, y - dely, PointDomain);
+
                 dpdx = mu * (PointDomain[i].U[0] - 2 * PointDomain[i + 1].U[0] + PointDomain[i + 2].U[0]) /
                        pow(delx, 2) / delx;
                 BMat[i] = rho * (-(pow(PointDomain[i + 2].U[0], 2) - pow(PointDomain[i].U[0], 2)) / (2 * delx) +
                                  mu * (PointDomain[i].U[0] - 2 * PointDomain[i + 1].U[0] + PointDomain[i + 2].U[0]) /
                                  pow(delx, 2)) - dpdx;
-                PMat[i][i + 2] += -1 / 2 * pow(delx, 2);
-                PMat[i][i] += 1 / 2 * pow(delx, 2);
+                PMat[i][i + 2] += -1 / (2 * pow(delx, 2));
+                PMat[i][i] += 1 / (2 * pow(delx, 2));
+
             } else if (InVector(i, Square.Nid)) {//Blunt North
+
                 x = PointDomain[i].x;
                 y = PointDomain[i].y;
                 Nid = Coor2pid(x, y + dely, PointDomain);
@@ -372,9 +385,10 @@ void BuildLaplacePMat(double **PMat,double *BMat,std::vector<Points> PointDomain
                 BMat[i] = rho * (-(pow(PointDomain[NNid].U[1], 2) - pow(PointDomain[i].U[1], 2)) / (2 * dely) +
                                  mu * (PointDomain[i].U[1] - 2 * PointDomain[Nid].U[1] + PointDomain[NNid].U[1]) /
                                  pow(dely, 2)) - dpdy;
-                PMat[i][NNid] += -1 / 2 * pow(dely, 2);
-                PMat[i][i] += 1 / 2 * pow(dely, 2);
+                PMat[i][NNid] += -1 / (2 * pow(dely, 2));
+                PMat[i][i] += 1 / (2 * pow(dely, 2));
             } else if (InVector(i, Square.Sid)) {//Blunt South
+
                 x = PointDomain[i].x;
                 y = PointDomain[i].y;
                 Sid = Coor2pid(x, y - dely, PointDomain);
@@ -384,9 +398,10 @@ void BuildLaplacePMat(double **PMat,double *BMat,std::vector<Points> PointDomain
                 BMat[i] = rho * (-(pow(PointDomain[i].U[1], 2) - pow(PointDomain[SSid].U[1], 2)) / (2 * dely) +
                                  mu * (PointDomain[i].U[1] - 2 * PointDomain[Sid].U[1] + PointDomain[SSid].U[1]) /
                                  pow(dely, 2)) - dpdy;
-                PMat[i][SSid] += -1 / 2 * pow(dely, 2);
-                PMat[i][i] += 1 / 2 * pow(dely, 2);
+                PMat[i][SSid] += -1 / (2 * pow(dely, 2));
+                PMat[i][i] += 1 / (2 * pow(dely, 2));
             } else if (InVector(i, Domain.Nid)) {//Domain North
+
                 x = PointDomain[i].x;
                 y = PointDomain[i].y;
                 SSid = Coor2pid(x, y - dely - dely, PointDomain);
@@ -397,22 +412,27 @@ void BuildLaplacePMat(double **PMat,double *BMat,std::vector<Points> PointDomain
                 BMat[i] = rho * (-(pow(PointDomain[i].U[1], 2) - pow(PointDomain[SSid].U[1], 2)) / (2 * dely) +
                                  mu * (PointDomain[i].U[1] - 2 * PointDomain[Sid].U[1] + PointDomain[SSid].U[1]) /
                                  pow(dely, 2)) - dpdy;
-                PMat[i][SSid] += -1 / 2 * pow(dely, 2);
-                PMat[i][i] += 1 / 2 * pow(dely, 2);
+                PMat[i][SSid] += -1 / (2 * pow(dely, 2));
+                PMat[i][i] += 1 / (2 * pow(dely, 2));
             } else if (InVector(i, Domain.Sid)) {//Domain South
+//                std::cout<<"DomainS --i -"<<i<<std::endl;
+
                 x = PointDomain[i].x;
                 y = PointDomain[i].y;
                 Nid = Coor2pid(x, y + dely, PointDomain);
                 NNid = Coor2pid(x, y + dely + dely, PointDomain);
-                Sid = Coor2pid(x, y - dely, PointDomain);
                 dpdy = mu * (PointDomain[i].U[1] - 2 * PointDomain[Nid].U[1] + PointDomain[NNid].U[1]) / pow(dely, 2) /
                        dely;
                 BMat[i] = rho * (-(pow(PointDomain[NNid].U[1], 2) - pow(PointDomain[i].U[1], 2)) / (2 * dely) +
                                  mu * (PointDomain[i].U[1] - 2 * PointDomain[Nid].U[1] + PointDomain[NNid].U[1]) /
                                  pow(dely, 2)) - dpdy;
-                PMat[i][NNid] += -1 / 2 * pow(dely, 2);
-                PMat[i][i] += 1 / 2 * pow(dely, 2);
+                PMat[i][NNid] += -1 / (2 * pow(dely, 2));
+                PMat[i][i] += 1 / (2 * pow(dely, 2));
+
+//                std::cout<<PMat[i][i]<<std::endl;
             } else if (InVector(i, Domain.Wid)) {//Domain inlet
+//                    std::cout<<"DomainW --i -"<<i<<std::endl;
+
                 x = PointDomain[i].x;
                 y = PointDomain[i].y;
                 Nid = Coor2pid(x, y + dely, PointDomain);
@@ -422,9 +442,10 @@ void BuildLaplacePMat(double **PMat,double *BMat,std::vector<Points> PointDomain
                 BMat[i] = rho * (-(pow(PointDomain[i + 2].U[0], 2) - pow(PointDomain[i].U[0], 2)) / (2 * delx) +
                                  mu * (PointDomain[i].U[0] - 2 * PointDomain[i + 1].U[0] + PointDomain[i + 2].U[0]) /
                                  pow(delx, 2)) - dpdx;
-                PMat[i][i + 2] += -1 / 2 * pow(delx, 2);
-                PMat[i][i] += 1 / 2 * pow(delx, 2);
-            } else if (InVector(i, Domain.Eid)) {//Domain outlet
+                PMat[i][i + 2] += -1 / (2 * pow(delx, 2));
+                PMat[i][i] += 1 / (2 * pow(delx, 2));
+            } else if (InVector(i, Domain.Eid)) {//Domain outleit
+
                 PMat[i][i] += 1;//equal to atm
                 BMat[i] = 1.013e+5;//atm;
             } else {
@@ -445,8 +466,8 @@ void BuildLaplacePMat(double **PMat,double *BMat,std::vector<Points> PointDomain
                                  pow(delx, 2) / +mu *
                                  (PointDomain[Nid].U[1] - 2 * PointDomain[i].U[1] + PointDomain[Sid].U[1]) /
                                  pow(dely, 2));
+
             }
-        }
 
 
     }
