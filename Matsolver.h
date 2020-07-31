@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <stdio.h>
 #include <string.h>
+#include <vector>
 
 class MatSol{
 private:
@@ -227,6 +228,21 @@ void SolveLU(double** LMat,double** UMat,double *BMat,double* xMat,int sizen){
             }
         }
     }
+
+    void SolveTDMA(std::vector<double> &TDMAa,std::vector<double> &TDMAb,std::vector<double> &TDMAc,std::vector<double> &Matr,int Nx){
+
+        TDMAc[0] = TDMAc[0]/TDMAb[0];
+        Matr[0] = Matr[0]/TDMAb[0];
+        for (int k = 1; k <Nx-1 ; ++k) {
+            float m = 1.0f/ (TDMAb[k]-TDMAa[k]*TDMAc[k-1]);
+            TDMAc[k] = TDMAc[k]*m;
+            Matr[k] =(Matr[k] -TDMAa[k]*Matr[k-1])*m;
+        }
+        for (int l = Nx-2; l>0 ;l-- ) {
+            Matr[l] -=TDMAc[l] *Matr[l+1];
+        }
+        Matr[0] -= TDMAc[0] * Matr[1];
+}
 
 
 
