@@ -8,7 +8,6 @@
 #include "math.h"
 #include <vector>
 #include <stdio.h>
-#include "Deriv.h"
 #include<algorithm>
 #include <fstream>
 

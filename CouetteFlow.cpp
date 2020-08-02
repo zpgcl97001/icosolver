@@ -1,7 +1,3 @@
-//
-// Created by Lin on 2020/7/27.
-//
-
 #include "CouetteFlow.h"
 #include "icoSolver.h"
 #include <math.h>
@@ -12,9 +8,9 @@
 //Initialize
 int main() {
 
-    double mu = 0.01;//Pa¡¤s
+    double mu = 0.01;//Pa?¡ès
     double rho = 1; //kg/m3
-    double Re = 800;
+    double Re = 200;
     double U_init;
     U_init = Re * mu / (rho);
 //    U_init =0.01;
@@ -131,8 +127,8 @@ int main() {
         }
     }
 
-//    for(auto i:Square.vInner_point){
-//        std::cout<<v_Domain[i].x<<"--"<<v_Domain[i].y<<std::endl;
+//    for(auto i:Square.uE_point){
+//        std::cout<<u_Domain[i].x<<"--"<<u_Domain[i].y<<std::endl;
 //    }
 
 
@@ -234,7 +230,7 @@ int main() {
                 u_Domain[i].F = method.Fx(u_Domain,v_Domain,i,mu,delx,dely,Nx,type);
 
             }
-                u_Domain[i].QPlus = u_Domain[i].Q + delt*u_Domain[i].F;
+            u_Domain[i].QPlus = u_Domain[i].Q + delt*u_Domain[i].F;
         }
         std::cout<<"Updated Fx"<<std::endl;
 
@@ -596,11 +592,58 @@ int main() {
 
         std::cout<<std::endl;
 
+
         if(step % 10 == 0){
+            //Combine Staggered Grid
+
+
+
+            for (auto p : v_Domain) {
+                int I = p.I;
+                int J = p.J;
+                if(J==0 || J==Ny-1){
+                    p.Q = 0;
+                }
+            }
+
+            for (auto i : Square.vS_point) {
+                v_Domain[i].Q =  0 ;
+            }
+            for (auto i : Square.vN_point) {
+                v_Domain[i].Q =  0 ;
+            }
+            for (auto i : Square.uW_point) {
+                u_Domain[i].Q =  0 ;
+            }
+            for (auto i : Square.uE_point) {
+                u_Domain[i].Q =  0 ;
+            }
+
+
+            for (int i=0; i<Total_points;++i) {
+                int I = Domain[i].I;
+                int J = Domain[i].J;
+                int x = Domain[i].x;
+                int y = Domain[i].y;
+//
+                if (I == 0 || J == 0 || I == Nx - 1 || J == Ny - 1) {
+                    Domain[i].u = 0;
+                    Domain[i].v = 0;
+                } else {
+                    int uid = J * Nx + I;
+                    int vid = J * (Nx - 1) + I;
+                    Domain[i].u = 0.5 * (u_Domain[uid].Q + u_Domain[uid - Nx].Q);
+                    Domain[i].v = 0.5 * (v_Domain[vid].Q + v_Domain[vid - 1].Q);
+//                std::cout<<Domain[i].u<<"--"<<Domain[i].v<<std::endl;
+                }
+            }
+
+
+
             method.Post_staggered("P",step,P_Domain,Nx-1,Ny-1);
             method.Post_staggered("U",step,u_Domain,Nx,Ny-1);
             method.Post_staggered("V",step,v_Domain,Nx-1,Ny);
-
+            method.Post_Domain("Domain",step,Domain,Nx,Ny);
         }
 
 
